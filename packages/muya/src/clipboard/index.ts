@@ -3,6 +3,7 @@ import type { Nullable } from '../types';
 import type { IClipboardPayload } from './copyData';
 import Format from '../block/base/format';
 import { classifyInputKind } from '../history';
+import { SelectionDirection, SelectionType } from '../selection/types';
 import { isClipboardEvent, isInputEvent, isKeyboardEvent } from '../utils';
 import { getClipboardData, writeClipboardData } from './copyData';
 import { cutSelection, deleteTableSelection, insertTextAtCursor } from './cut';
@@ -221,6 +222,19 @@ class Clipboard {
 
     pasteImage(src: string): Promise<void> {
         return pasteImageSrc(this, src);
+    }
+
+    async insertMarkdown(markdown: string, placement: 'replace' | 'after'): Promise<void> {
+        const selection = this.selection.getTextSelection();
+        if (!selection || this.muya.isReadOnly)
+            return;
+        if (placement === 'after') {
+            const end = selection.direction === SelectionDirection.BACKWARD ? selection.anchor : selection.focus;
+            const caret = { path: end.path, offset: end.offset };
+            this.selection.setSelection({ kind: SelectionType.TEXT, anchor: caret, focus: caret });
+            this.muya.insertParagraph('after');
+        }
+        await pastePlainText(this, markdown);
     }
 
     private async _readClipboardText(): Promise<string> {
