@@ -50,6 +50,7 @@ const COMMAND_KEY_MAP: Record<string, string> = {
 
   'edit.select-all': 'commands.edit.selectAll',
   'edit.duplicate': 'commands.edit.duplicate',
+  'edit.ai-assist': 'commands.edit.aiAssist',
 
   'edit.create-paragraph': 'commands.edit.createParagraph',
   'edit.delete-paragraph': 'commands.edit.deleteParagraph',

@@ -3,6 +3,7 @@ import type { Nullable } from '../types';
 import type { IClipboardPayload } from './copyData';
 import Format from '../block/base/format';
 import { classifyInputKind } from '../history';
+import { SelectionDirection, SelectionType } from '../selection/types';
 import { isClipboardEvent, isInputEvent, isKeyboardEvent } from '../utils';
 import { getClipboardData, writeClipboardData } from './copyData';
 import { cutSelection, deleteTableSelection, insertTextAtCursor } from './cut';
@@ -221,6 +222,26 @@ class Clipboard {
 
     pasteImage(src: string): Promise<void> {
         return pasteImageSrc(this, src);
+    }
+
+    async insertMarkdown(markdown: string, placement: 'replace' | 'after'): Promise<void> {
+        const selection = this.selection.getTextSelection();
+        if (!selection || this.muya.isReadOnly)
+            return;
+        // Fence the insertion into its own undo group whose undo restores the
+        // original selection, so a single undo reverts exactly this call.
+        const { history } = this.muya.editor;
+        history.cutoff(this.selection.getSelectionState() ?? undefined);
+        const depth = history.undoDepth;
+        if (placement === 'after') {
+            const end = selection.direction === SelectionDirection.BACKWARD ? selection.anchor : selection.focus;
+            const caret = { path: end.path, offset: end.offset };
+            this.selection.setSelection({ kind: SelectionType.TEXT, anchor: caret, focus: caret });
+            this.muya.insertParagraph('after');
+        }
+        await pastePlainText(this, markdown);
+        history.squashSince(depth);
+        history.cutoff();
     }
 
     private async _readClipboardText(): Promise<string> {

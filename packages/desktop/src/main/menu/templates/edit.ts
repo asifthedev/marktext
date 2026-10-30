@@ -106,6 +106,14 @@ export default function(keybindings: Keybindings): MenuItemConstructorOptions {
         type: 'separator'
       },
       {
+        id: 'aiAssistMenuItem',
+        label: t('menu.edit.aiAssist'),
+        accelerator: keybindings.getAccelerator(COMMANDS.EDIT_AI_ASSIST) ?? undefined,
+        click(_menuItem, browserWindow) {
+          actions.editorAiAssist(browserWindow as BrowserWindow | undefined)
+        }
+      },
+      {
         id: 'duplicateMenuItem',
         label: t('menu.edit.duplicate'),
         accelerator: keybindings.getAccelerator(COMMANDS.EDIT_DUPLICATE) ?? undefined,

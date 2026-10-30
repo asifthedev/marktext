@@ -152,6 +152,7 @@ import { useProjectStore } from '@/store/project'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { SyntheticHistory, type IFileHistoryLike } from './syntheticHistory'
+import { AI_ASSIST_OPEN, isAiAction, selectionRect, type AiAssistTarget } from '../aiAssist/target'
 
 // Import the engine entrypoint for its editor styles.
 import '@muyajs/core'
@@ -1007,6 +1008,38 @@ const handleCopyPaste = (type: unknown) => {
   }
 }
 
+const handleAiAssist = (action: unknown) => {
+  const muya = editor.value
+  if (sourceCode.value || !muya || !isAiAction(action) || currentFile.value?.readOnly) return
+  const text = muya.getSelectedText()
+  const state = muya.getSelectionState()
+  if (!text.trim() || state?.kind !== SelectionType.TEXT) {
+    void notice.notify({ title: t('contextMenu.ai.title'), message: t('editor.ai.noSelection'), type: 'warning' })
+    return
+  }
+  const target: AiAssistTarget = {
+    text,
+    rect: selectionRect(),
+    apply: async(markdown, placement) => {
+      // Edits made while the panel was open may have moved or changed the text.
+      if (!muya.setSelection(state) || muya.getSelectedText() !== text) {
+        throw new Error(t('editor.ai.selectionChanged'))
+      }
+      await muya.insertMarkdown(markdown, placement)
+      const previewed = muya.getMarkdown()
+      return {
+        revert: () => {
+          // insertMarkdown is a single undo step, but only while nothing was edited after it.
+          if (muya.getMarkdown() !== previewed) throw new Error(t('editor.ai.documentChanged'))
+          muya.undo()
+        }
+      }
+    },
+    focus: () => muya.focus()
+  }
+  bus.emit(AI_ASSIST_OPEN, { action, target })
+}
+
 const insertImage = (src: unknown) => {
   if (!sourceCode.value) {
     editor.value && editor.value.insertImage({ src: src as string })
@@ -1835,6 +1868,7 @@ onMounted(() => {
   bus.on('copyAsRich', handleCopyPaste)
   bus.on('copyAsHtml', handleCopyPaste)
   bus.on('pasteAsPlainText', handleCopyPaste)
+  bus.on('aiAssist', handleAiAssist)
   bus.on('duplicate', handleParagraph)
   bus.on('createParagraph', handleParagraph)
   bus.on('deleteParagraph', handleParagraph)
@@ -2005,6 +2039,7 @@ onBeforeUnmount(() => {
   bus.off('copyAsRich', handleCopyPaste)
   bus.off('copyAsHtml', handleCopyPaste)
   bus.off('pasteAsPlainText', handleCopyPaste)
+  bus.off('aiAssist', handleAiAssist)
   bus.off('duplicate', handleParagraph)
   bus.off('createParagraph', handleParagraph)
   bus.off('deleteParagraph', handleParagraph)

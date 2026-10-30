@@ -8,6 +8,7 @@ export const themes: ReadonlyArray<ThemeDescriptor> = [
   { name: 'light' },
   { name: 'catppuccin-latte' },
   { name: 'everforest-light' },
+  { name: 'github' },
   { name: 'graphite' },
   { name: 'gruvbox-light' },
   { name: 'rose-pine-dawn' },
@@ -40,5 +41,8 @@ export const themes: ReadonlyArray<ThemeDescriptor> = [
   { name: 'tokyo-night-storm' }
 ]
 
-export const themeLabel = (name: string): string => name.split('-')
+// Names that title-casing the id would misspell.
+const themeLabels: Readonly<Record<string, string>> = { github: 'GitHub' }
+
+export const themeLabel = (name: string): string => themeLabels[name] ?? name.split('-')
   .map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')

@@ -715,6 +715,19 @@ export class Muya {
         return this.editor.clipboard.pasteAsPlainText();
     }
 
+    /**
+     * Insert Markdown source as parsed blocks at the current text selection.
+     * `replace` swaps the selection for the content; `after` leaves the
+     * selection intact and inserts the content in a new paragraph after the
+     * block holding the selection's end. The insertion is one undo step that
+     * also restores the original selection. No-op without a text selection.
+     */
+    insertMarkdown(markdown: string, placement: 'replace' | 'after' = 'replace'): Promise<void> {
+        if (!this.canMutate)
+            return Promise.resolve();
+        return this.editor.clipboard.insertMarkdown(markdown, placement);
+    }
+
     /** Insert a file path or data URL through the configured `imageAction`. */
     pasteImage(src: string): Promise<void> {
         if (!this.canMutate)

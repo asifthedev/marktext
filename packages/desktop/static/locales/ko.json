@@ -58,7 +58,8 @@
       "screenshot": "스크린샷",
       "lineEnding": "줄 끝",
       "lineEndingCrlf": "CRLF(Windows)",
-      "lineEndingLf": "LF(Linux/Mac)"
+      "lineEndingLf": "LF(Linux/Mac)",
+      "aiAssist": "AI Assist..."
     },
     "paragraph": {
       "title": "단락",
@@ -184,7 +185,8 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night 라이트",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "율리시스 라이트"
+      "ulyssesLight": "율리시스 라이트",
+      "githubLight": "GitHub Light"
     }
   },
   "contextMenu": {
@@ -221,6 +223,14 @@
       "copyPath": "경로 복사",
       "showInFolder": "폴더에서 보기",
       "showInSideBar": "사이드바에서 보기"
+    },
+    "ai": {
+      "title": "AI",
+      "refine": "Refine",
+      "fixGrammar": "Fix Spelling & Grammar",
+      "shorter": "Make Shorter",
+      "longer": "Make Longer",
+      "custom": "Custom Prompt..."
     }
   },
   "search": {
@@ -410,7 +420,8 @@
       "files": "파일 및 저장",
       "markdown": "Markdown",
       "images": "이미지 및 내보내기",
-      "keybindings": "키보드 단축키"
+      "keybindings": "키보드 단축키",
+      "ai": "AI"
     },
     "general": {
       "title": "일반",
@@ -757,6 +768,22 @@
       "checking": "확인 중…",
       "recheck": "다시 확인",
       "failed": "감지에 실패했습니다. 다시 확인하세요."
+    },
+    "ai": {
+      "title": "AI assistant",
+      "enable": "Enable AI actions for selected text",
+      "privacyNote": "Selected text is sent to the configured provider only when you run an AI action.",
+      "model": "Model",
+      "modelNotes": "Any chat model your provider offers, e.g. gpt-4.1-mini or gpt-4o.",
+      "baseUrl": "API base URL",
+      "baseUrlNotes": "Leave empty for OpenAI. Any OpenAI-compatible endpoint also works, e.g. http://localhost:11434/v1 for Ollama.",
+      "apiKey": "API key",
+      "apiKeyNotes": "Stored in the system keychain and never shown again.",
+      "apiKeySet": "An API key is saved.",
+      "apiKeyMissing": "No API key saved.",
+      "save": "Save",
+      "remove": "Remove",
+      "saveFailed": "Could not save the API key: {message}"
     }
   },
   "about": {
@@ -814,7 +841,8 @@
       "findPrevious": "이전 찾기",
       "replace": "바꾸기",
       "findInFolder": "폴더에서 찾기",
-      "screenshot": "스크린샷"
+      "screenshot": "스크린샷",
+      "aiAssist": "AI Assist"
     },
     "paragraph": {
       "heading1": "제목 1",
@@ -1025,6 +1053,26 @@
     "tabs": {
       "close": "{name} 닫기",
       "preview": "{name}, 미리보기 탭"
+    },
+    "ai": {
+      "promptPlaceholder": "Tell the AI what to do with the selected text...",
+      "run": "Run",
+      "stop": "Stop",
+      "replace": "Replace",
+      "insertBelow": "Insert Below",
+      "copy": "Copy",
+      "retry": "Retry",
+      "discard": "Discard",
+      "generating": "Generating...",
+      "noSelection": "Select some text first.",
+      "disabled": "Turn on AI in Preferences > AI first.",
+      "missingApiKey": "Add an API key in Preferences > AI first.",
+      "failed": "AI request failed: {message}",
+      "selectionChanged": "The selected text has changed. Select it again and retry.",
+      "accept": "Accept",
+      "reject": "Reject",
+      "previewing": "Preview shown in the document. Accept to keep it or Reject to restore the original.",
+      "documentChanged": "The document was edited after the preview, so it cannot be rejected automatically. Use Undo instead."
     }
   },
   "readingMode": {

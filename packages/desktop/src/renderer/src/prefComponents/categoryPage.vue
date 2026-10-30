@@ -31,6 +31,7 @@
       v-if="category === 'images'"
       embedded
     />
+    <ai-settings v-if="category === 'ai'" />
   </div>
 </template>
 
@@ -42,6 +43,7 @@ import EditorSettings from './editor/index.vue'
 import ThemeSettings from './theme/index.vue'
 import SpellcheckerSettings from './spellchecker/index.vue'
 import ImageSettings from './image/index.vue'
+import AiSettings from './ai/index.vue'
 
 defineProps<{ category: PreferenceCategoryId }>()
 const { t } = useI18n()

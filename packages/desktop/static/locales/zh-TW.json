@@ -58,7 +58,8 @@
       "screenshot": "螢幕截圖",
       "lineEnding": "行結束符",
       "lineEndingCrlf": "CRLF(Windows)",
-      "lineEndingLf": "LF(Linux/Mac)"
+      "lineEndingLf": "LF(Linux/Mac)",
+      "aiAssist": "AI Assist..."
     },
     "paragraph": {
       "title": "段落",
@@ -184,7 +185,8 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night 淺色",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses 淺色"
+      "ulyssesLight": "Ulysses 淺色",
+      "githubLight": "GitHub Light"
     }
   },
   "contextMenu": {
@@ -221,6 +223,14 @@
       "copyPath": "複製路徑",
       "showInFolder": "在資料夾中顯示",
       "showInSideBar": "在側邊欄中顯示"
+    },
+    "ai": {
+      "title": "AI",
+      "refine": "Refine",
+      "fixGrammar": "Fix Spelling & Grammar",
+      "shorter": "Make Shorter",
+      "longer": "Make Longer",
+      "custom": "Custom Prompt..."
     }
   },
   "search": {
@@ -410,7 +420,8 @@
       "files": "檔案與儲存",
       "markdown": "Markdown",
       "images": "圖片與匯出",
-      "keybindings": "快捷鍵"
+      "keybindings": "快捷鍵",
+      "ai": "AI"
     },
     "general": {
       "title": "一般",
@@ -757,6 +768,22 @@
       "checking": "偵測中…",
       "recheck": "重新偵測",
       "failed": "偵測失敗，請重新偵測。"
+    },
+    "ai": {
+      "title": "AI assistant",
+      "enable": "Enable AI actions for selected text",
+      "privacyNote": "Selected text is sent to the configured provider only when you run an AI action.",
+      "model": "Model",
+      "modelNotes": "Any chat model your provider offers, e.g. gpt-4.1-mini or gpt-4o.",
+      "baseUrl": "API base URL",
+      "baseUrlNotes": "Leave empty for OpenAI. Any OpenAI-compatible endpoint also works, e.g. http://localhost:11434/v1 for Ollama.",
+      "apiKey": "API key",
+      "apiKeyNotes": "Stored in the system keychain and never shown again.",
+      "apiKeySet": "An API key is saved.",
+      "apiKeyMissing": "No API key saved.",
+      "save": "Save",
+      "remove": "Remove",
+      "saveFailed": "Could not save the API key: {message}"
     }
   },
   "about": {
@@ -814,7 +841,8 @@
       "findPrevious": "尋找上一個",
       "replace": "取代",
       "findInFolder": "在資料夾中尋找",
-      "screenshot": "螢幕截圖"
+      "screenshot": "螢幕截圖",
+      "aiAssist": "AI Assist"
     },
     "paragraph": {
       "heading1": "標題 1",
@@ -1025,6 +1053,26 @@
     "tabs": {
       "close": "關閉 {name}",
       "preview": "{name}，預覽分頁"
+    },
+    "ai": {
+      "promptPlaceholder": "Tell the AI what to do with the selected text...",
+      "run": "Run",
+      "stop": "Stop",
+      "replace": "Replace",
+      "insertBelow": "Insert Below",
+      "copy": "Copy",
+      "retry": "Retry",
+      "discard": "Discard",
+      "generating": "Generating...",
+      "noSelection": "Select some text first.",
+      "disabled": "Turn on AI in Preferences > AI first.",
+      "missingApiKey": "Add an API key in Preferences > AI first.",
+      "failed": "AI request failed: {message}",
+      "selectionChanged": "The selected text has changed. Select it again and retry.",
+      "accept": "Accept",
+      "reject": "Reject",
+      "previewing": "Preview shown in the document. Accept to keep it or Reject to restore the original.",
+      "documentChanged": "The document was edited after the preview, so it cannot be rejected automatically. Use Undo instead."
     }
   },
   "readingMode": {

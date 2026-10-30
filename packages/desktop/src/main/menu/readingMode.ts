@@ -11,6 +11,7 @@ const blockedItems = [
   'pasteMenuItem',
   'pasteAsPlainTextMenuItem',
   'duplicateMenuItem',
+  'aiAssistMenuItem',
   'createParagraphMenuItem',
   'deleteParagraphMenuItem',
   'findMenuItem',

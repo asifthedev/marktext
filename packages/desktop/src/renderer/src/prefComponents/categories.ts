@@ -1,5 +1,5 @@
 import {
-  Setting, Brush, Edit, FolderOpened, Document, Picture, Operation
+  Setting, Brush, Edit, FolderOpened, Document, Picture, MagicStick, Operation
 } from '@element-plus/icons-vue'
 
 export const preferenceCategories = [
@@ -9,6 +9,7 @@ export const preferenceCategories = [
   { id: 'files', icon: FolderOpened },
   { id: 'markdown', icon: Document },
   { id: 'images', icon: Picture },
+  { id: 'ai', icon: MagicStick },
   { id: 'keybindings', icon: Operation }
 ] as const
 export type PreferenceCategoryId = (typeof preferenceCategories)[number]['id']

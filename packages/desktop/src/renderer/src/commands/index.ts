@@ -201,6 +201,12 @@ const commands: CommandDescriptor[] = [
     }
   },
   {
+    id: 'edit.ai-assist',
+    execute: async() => {
+      focusEditorAndExecute(() => bus.emit('aiAssist', 'custom'))
+    }
+  },
+  {
     id: 'edit.create-paragraph',
     execute: async() => {
       focusEditorAndExecute(() => bus.emit('createParagraph', 'createParagraph'))

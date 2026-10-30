@@ -97,6 +97,10 @@ export interface PreferencesState {
   darkModeTheme: string
   customCss: string
 
+  aiEnabled: boolean
+  aiModel: string
+  aiBaseUrl: string
+
   spellcheckerEnabled: boolean
   spellcheckerNoUnderline: boolean
   spellcheckerLanguage: string
@@ -220,6 +224,10 @@ export const usePreferencesStore = defineStore('preferences', {
     lightModeTheme: 'light',
     darkModeTheme: 'dark',
     customCss: '',
+
+    aiEnabled: false,
+    aiModel: 'gpt-4.1-mini',
+    aiBaseUrl: '',
 
     spellcheckerEnabled: false,
     spellcheckerNoUnderline: false,

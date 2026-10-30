@@ -9,7 +9,8 @@ import {
   getLookUp,
   SEPARATOR,
   getInsertBefore,
-  getInsertAfter
+  getInsertAfter,
+  getAiAssist
 } from './menuItems'
 import spellcheckMenuBuilder from './spellcheck'
 import { t } from '../../i18n'
@@ -62,7 +63,8 @@ export const showEditorContextMenu = (
   win: BrowserWindow,
   event: ContextMenuEvent,
   params: ContextMenuParams,
-  isSpellcheckerEnabled: boolean
+  isSpellcheckerEnabled: boolean,
+  isAiEnabled = false
 ): void => {
   const {
     isEditable,
@@ -99,6 +101,11 @@ export const showEditorContextMenu = (
           submenu: spellingSubmenu as Electron.MenuItemConstructorOptions[]
         })
       )
+      menu.append(new MenuItem(SEPARATOR))
+    }
+
+    if (isAiEnabled && hasText) {
+      menu.append(new MenuItem(getAiAssist()))
       menu.append(new MenuItem(SEPARATOR))
     }
 

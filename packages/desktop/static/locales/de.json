@@ -58,7 +58,8 @@
       "screenshot": "Screenshot",
       "lineEnding": "Zeilenendezeichen",
       "lineEndingCrlf": "CRLF (Windows)",
-      "lineEndingLf": "LF (Linux/Mac)"
+      "lineEndingLf": "LF (Linux/Mac)",
+      "aiAssist": "AI Assist..."
     },
     "paragraph": {
       "title": "Absatz",
@@ -184,7 +185,8 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night Hell",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses Hell"
+      "ulyssesLight": "Ulysses Hell",
+      "githubLight": "GitHub Light"
     }
   },
   "contextMenu": {
@@ -221,6 +223,14 @@
       "copyPath": "Pfad kopieren",
       "showInFolder": "Im Ordner anzeigen",
       "showInSideBar": "In Seitenleiste anzeigen"
+    },
+    "ai": {
+      "title": "AI",
+      "refine": "Refine",
+      "fixGrammar": "Fix Spelling & Grammar",
+      "shorter": "Make Shorter",
+      "longer": "Make Longer",
+      "custom": "Custom Prompt..."
     }
   },
   "search": {
@@ -410,7 +420,8 @@
       "files": "Dateien und Speichern",
       "markdown": "Markdown",
       "images": "Bilder und Export",
-      "keybindings": "Tastenkürzel"
+      "keybindings": "Tastenkürzel",
+      "ai": "AI"
     },
     "general": {
       "title": "Allgemein",
@@ -757,6 +768,22 @@
       "checking": "Wird geprüft…",
       "recheck": "Erneut prüfen",
       "failed": "Erkennung fehlgeschlagen. Bitte erneut prüfen."
+    },
+    "ai": {
+      "title": "AI assistant",
+      "enable": "Enable AI actions for selected text",
+      "privacyNote": "Selected text is sent to the configured provider only when you run an AI action.",
+      "model": "Model",
+      "modelNotes": "Any chat model your provider offers, e.g. gpt-4.1-mini or gpt-4o.",
+      "baseUrl": "API base URL",
+      "baseUrlNotes": "Leave empty for OpenAI. Any OpenAI-compatible endpoint also works, e.g. http://localhost:11434/v1 for Ollama.",
+      "apiKey": "API key",
+      "apiKeyNotes": "Stored in the system keychain and never shown again.",
+      "apiKeySet": "An API key is saved.",
+      "apiKeyMissing": "No API key saved.",
+      "save": "Save",
+      "remove": "Remove",
+      "saveFailed": "Could not save the API key: {message}"
     }
   },
   "about": {
@@ -814,7 +841,8 @@
       "findPrevious": "Rückwärts suchen",
       "replace": "Ersetzen",
       "findInFolder": "Im Ordner suchen",
-      "screenshot": "Screenshot"
+      "screenshot": "Screenshot",
+      "aiAssist": "AI Assist"
     },
     "paragraph": {
       "heading1": "Überschrift 1",
@@ -1025,6 +1053,26 @@
     "tabs": {
       "close": "{name} schließen",
       "preview": "{name}, Vorschauregister"
+    },
+    "ai": {
+      "promptPlaceholder": "Tell the AI what to do with the selected text...",
+      "run": "Run",
+      "stop": "Stop",
+      "replace": "Replace",
+      "insertBelow": "Insert Below",
+      "copy": "Copy",
+      "retry": "Retry",
+      "discard": "Discard",
+      "generating": "Generating...",
+      "noSelection": "Select some text first.",
+      "disabled": "Turn on AI in Preferences > AI first.",
+      "missingApiKey": "Add an API key in Preferences > AI first.",
+      "failed": "AI request failed: {message}",
+      "selectionChanged": "The selected text has changed. Select it again and retry.",
+      "accept": "Accept",
+      "reject": "Reject",
+      "previewing": "Preview shown in the document. Accept to keep it or Reject to restore the original.",
+      "documentChanged": "The document was edited after the preview, so it cannot be rejected automatically. Use Undo instead."
     }
   },
   "readingMode": {

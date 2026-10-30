@@ -10,6 +10,7 @@ const editingCommands = new Set([
   'edit.paste',
   'edit.paste-as-plaintext',
   'edit.duplicate',
+  'edit.ai-assist',
   'edit.create-paragraph',
   'edit.delete-paragraph',
   'edit.find',

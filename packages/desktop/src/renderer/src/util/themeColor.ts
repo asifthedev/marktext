@@ -1,5 +1,6 @@
 import darkTheme from '../assets/themes/dark.theme.css?inline'
 import graphiteTheme from '../assets/themes/graphite.theme.css?inline'
+import githubTheme from '../assets/themes/github.theme.css?inline'
 import materialDarkTheme from '../assets/themes/material-dark.theme.css?inline'
 import oneDarkTheme from '../assets/themes/one-dark.theme.css?inline'
 import ulyssesTheme from '../assets/themes/ulysses.theme.css?inline'
@@ -63,10 +64,15 @@ import oxocarbonDarkPrismTheme from '../assets/themes/prismjs/oxocarbon-dark.the
 import nightfoxPrismTheme from '../assets/themes/prismjs/nightfox.theme.css?inline'
 import cyberdreamPrismTheme from '../assets/themes/prismjs/cyberdream.theme.css?inline'
 import graphitePrismTheme from '../assets/themes/prismjs/graphite.theme.css?inline'
+import githubPrismTheme from '../assets/themes/prismjs/github.theme.css?inline'
 import ulyssesPrismTheme from '../assets/themes/prismjs/ulysses.theme.css?inline'
 
 export const dark = (): string => {
   return darkTheme + '\n' + darkPrismTheme
+}
+
+export const github = (): string => {
+  return githubTheme + '\n' + githubPrismTheme
 }
 
 export const graphite = (): string => {
