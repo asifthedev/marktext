@@ -343,6 +343,26 @@ export const preferenceDefinitions: Record<string, PreferenceDefinition> = {
     "label": "preferences.general.startup.restoreViewState",
     "notes": "preferences.general.startup.restoreViewStateNote"
   },
+  "aiEnabled": {
+    "category": "ai",
+    "label": "preferences.ai.enable",
+    "notes": "preferences.ai.privacyNote"
+  },
+  "aiModel": {
+    "category": "ai",
+    "label": "preferences.ai.model",
+    "notes": "preferences.ai.modelNotes"
+  },
+  "aiBaseUrl": {
+    "category": "ai",
+    "label": "preferences.ai.baseUrl",
+    "notes": "preferences.ai.baseUrlNotes"
+  },
+  "aiApiKey": {
+    "category": "ai",
+    "label": "preferences.ai.apiKey",
+    "notes": "preferences.ai.apiKeyNotes"
+  },
   "spellcheckerEnabled": {
     "category": "editor",
     "label": "preferences.spellchecker.enableSpellChecking"

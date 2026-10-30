@@ -33,6 +33,7 @@ const keybindings: Map<string, string> = new Map([
   ['edit.paste-as-plaintext', 'Ctrl+Shift+V'],
   ['edit.select-all', 'Ctrl+A'],
   ['edit.duplicate', 'Ctrl+Alt+D'],
+  ['edit.ai-assist', 'Ctrl+Alt+K'],
   ['edit.create-paragraph', 'Ctrl+Shift+N'],
   ['edit.delete-paragraph', 'Ctrl+Shift+D'],
   ['edit.find', 'Ctrl+F'],

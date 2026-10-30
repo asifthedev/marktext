@@ -1,6 +1,7 @@
 
 import { type BaseWindow, type BrowserWindow, type MenuItemConstructorOptions } from 'electron'
 import { t } from '../../i18n'
+import type { AiAction } from '@shared/types/ai'
 
 // Use function form to avoid calling the translation function during module load
 export const getCUT = (): MenuItemConstructorOptions => ({
@@ -106,6 +107,27 @@ export const getInsertAfter = (): MenuItemConstructorOptions => ({
       ;(targetWindow as BrowserWindow).webContents.send('mt::cm-insert-paragraph', 'after')
     }
   }
+})
+
+const AI_ACTION_LABELS: Array<[AiAction, string]> = [
+  ['refine', 'contextMenu.ai.refine'],
+  ['fix-grammar', 'contextMenu.ai.fixGrammar'],
+  ['shorter', 'contextMenu.ai.shorter'],
+  ['longer', 'contextMenu.ai.longer'],
+  ['custom', 'contextMenu.ai.custom']
+]
+
+export const getAiAssist = (): MenuItemConstructorOptions => ({
+  label: t('contextMenu.ai.title'),
+  id: 'aiAssistMenuItem',
+  submenu: AI_ACTION_LABELS.map(([action, label]) => ({
+    label: t(label),
+    click(_menuItem, targetWindow) {
+      if (targetWindow) {
+        ;(targetWindow as BrowserWindow).webContents.send('mt::ai-assist', action)
+      }
+    }
+  }))
 })
 
 // Retained for backward compatibility

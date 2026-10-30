@@ -84,6 +84,10 @@ export const editorPasteAsPlainText = (win: Win): void => {
   edit(win, 'pasteAsPlainText')
 }
 
+export const editorAiAssist = (win: Win): void => {
+  win?.webContents.send('mt::ai-assist', 'custom')
+}
+
 export const editorSelectAll = (win: Win): void => {
   if (!win) {
     forwardToNativeResponder('selectAll:')
@@ -160,6 +164,7 @@ export const lineEnding = (win: Win, lineEnding: string): void => {
 
 
 export const loadEditCommands = (commandManager: CommandManager): void => {
+  commandManager.add(COMMANDS.EDIT_AI_ASSIST, editorAiAssist)
   commandManager.add(COMMANDS.EDIT_COPY, nativeCopy)
   commandManager.add(COMMANDS.EDIT_COPY_AS_HTML, editorCopyAsHtml)
   commandManager.add(COMMANDS.EDIT_COPY_AS_RICH, editorCopyAsRich)

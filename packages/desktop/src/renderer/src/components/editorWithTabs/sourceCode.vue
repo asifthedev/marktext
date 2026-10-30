@@ -30,6 +30,9 @@ import { adjustCursor, isWindows } from '../../util'
 import { getSourceExtraKeys } from '../../codeMirror/keybindings'
 import bus from '../../bus'
 import { oneDarkThemes, railscastsThemes } from '@/config'
+import { t } from '@/i18n'
+import notice from '@/services/notification'
+import { AI_ASSIST_OPEN, isAiAction, type AiAssistTarget } from '../aiAssist/target'
 
 interface MuyaIndexCursorLike {
   anchor: CodeMirror.Position
@@ -257,6 +260,35 @@ const handleRedo = () => {
   }
 }
 
+const handleAiAssist = (action: unknown) => {
+  const cm = editor.value
+  if (!sourceCode.value || !cm || !isAiAction(action)) return
+  const text = cm.getSelection()
+  if (!text.trim()) {
+    void notice.notify({ title: t('contextMenu.ai.title'), message: t('editor.ai.noSelection'), type: 'warning' })
+    return
+  }
+  const [range] = cm.listSelections()
+  const from = range.from()
+  const to = range.to()
+  const coords = cm.charCoords(to, 'window')
+  const target: AiAssistTarget = {
+    text,
+    rect: new DOMRect(coords.left, coords.top, 0, coords.bottom - coords.top),
+    apply: async(markdown, placement) => {
+      // Edits made while the panel was open may have moved or changed the text.
+      if (cm.getRange(from, to) !== text) throw new Error(t('editor.ai.selectionChanged'))
+      if (placement === 'replace') {
+        cm.replaceRange(markdown, from, to)
+      } else {
+        cm.replaceRange(`\n\n${markdown}`, { line: to.line, ch: cm.getLine(to.line).length })
+      }
+    },
+    focus: () => cm.focus()
+  }
+  bus.emit(AI_ASSIST_OPEN, { action, target })
+}
+
 interface ImageActionPayload {
   id: string
   result: string
@@ -442,6 +474,7 @@ onMounted(() => {
   bus.on('selectAll', handleSelectAll)
   bus.on('undo', handleUndo)
   bus.on('redo', handleRedo)
+  bus.on('aiAssist', handleAiAssist)
   bus.on('image-action', handleImageAction)
   bus.on('scroll-to-header', handleScrollToHeader)
 
@@ -509,6 +542,7 @@ onBeforeUnmount(() => {
   bus.off('selectAll', handleSelectAll)
   bus.off('undo', handleUndo)
   bus.off('redo', handleRedo)
+  bus.off('aiAssist', handleAiAssist)
   bus.off('image-action', handleImageAction)
   editorStore.SET_SELECTION_WORD_COUNT(null)
   lastSelectionKey = ''

@@ -150,6 +150,9 @@ export interface UserPreferences extends RecoveryPreferences {
   lightModeTheme: string
   darkModeTheme: string
   customCss: string
+  aiEnabled: boolean
+  aiModel: string
+  aiBaseUrl: string
   spellcheckerEnabled: boolean
   spellcheckerNoUnderline: boolean
   spellcheckerLanguage: string

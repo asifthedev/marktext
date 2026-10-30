@@ -432,6 +432,22 @@
     "type": "string",
     "default": ""
   },
+  "aiEnabled": {
+    "description": "AI--Whether AI writing assistance is available for selected text.",
+    "type": "boolean",
+    "default": false
+  },
+  "aiModel": {
+    "description": "AI--The model used for AI writing assistance.",
+    "type": "string",
+    "minLength": 1,
+    "default": "gpt-4.1-mini"
+  },
+  "aiBaseUrl": {
+    "description": "AI--Custom OpenAI-compatible API endpoint; empty uses the OpenAI API.",
+    "type": "string",
+    "default": ""
+  },
   "spellcheckerEnabled": {
     "description": "Spelling--Whether spell checking is enabled.",
     "type": "boolean",

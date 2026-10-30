@@ -15,7 +15,7 @@ export default defineConfig({
     build: {
       externalizeDeps: {
         // Bundle ESM-only dependencies so main can load them from CommonJS at startup.
-        exclude: ['electron-store'],
+        exclude: ['electron-store', 'ai', '@ai-sdk/openai'],
         include: ['native-keymap']
       }
     },

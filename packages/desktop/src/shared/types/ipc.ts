@@ -8,6 +8,7 @@ import type { IKeyboardLayoutInfo, IKeyboardMapping } from 'native-keymap'
 import type { TabOptions, SidebarOpenOptions, PageOptions, ExportType, SerializedStat, LineEnding, FileChangeDetail, PandocExportPayload } from './files'
 import type { MenuTemplate, MenuPopupPosition } from './menu'
 import type { PandocCommandInfo } from './pandoc'
+import type { AiAction, AiRequest, AiResult } from './ai'
 
 export interface SaveDialogRequest {
   title?: string
@@ -37,6 +38,9 @@ import type { StateIpcInvokeChannels, StateIpcMainEvents } from './applicationSt
 
 export interface IpcInvokeChannels extends StateIpcInvokeChannels {
   'mt::get-recently-used-documents': { args: []; ret: RecentDocument[] }
+  'mt::ai::has-api-key': { args: []; ret: boolean }
+  'mt::ai::run': { args: [requestId: string, request: AiRequest]; ret: AiResult }
+  'mt::ai::set-api-key': { args: [apiKey: string]; ret: void }
   'mt::project-remove-root': { args: [key: string]; ret: boolean }
   'mt::project-retry-root': { args: [key: string]; ret: boolean }
   'mt::clipboard::write-text': { args: [text: string]; ret: boolean }
@@ -104,6 +108,7 @@ export interface IpcInvokeChannels extends StateIpcInvokeChannels {
 
 export interface IpcSendChannels {
   'mt::cmd-add-folder': []
+  'mt::ai::cancel': [requestId: string]
   'mt::project-renderer-ready': []
   'mt::forget-document': [tabId: string]
   'mt::update-document-mode': [readOnly: boolean, hasDocument?: boolean]
@@ -215,6 +220,8 @@ export interface IpcMainEventChannels extends StateIpcMainEvents {
   'mt::UPDATE_ERROR': [error: unknown]
   'mt::UPDATE_NOT_AVAILABLE': [info?: unknown]
   'mt::about-dialog': []
+  'mt::ai::delta': [requestId: string, delta: string]
+  'mt::ai-assist': [action: AiAction]
   'mt::cm-copy-as-html': []
   'mt::cm-copy-as-rich': []
   'mt::cm-insert-paragraph': [direction: 'before' | 'after']

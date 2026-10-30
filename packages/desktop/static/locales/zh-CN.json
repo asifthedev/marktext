@@ -58,7 +58,8 @@
       "screenshot": "截图",
       "lineEnding": "行结束符",
       "lineEndingCrlf": "CRLF (Windows)",
-      "lineEndingLf": "LF (Unix/macOS)"
+      "lineEndingLf": "LF (Unix/macOS)",
+      "aiAssist": "AI Assist..."
     },
     "paragraph": {
       "title": "段落",
@@ -221,6 +222,14 @@
       "copyPath": "复制路径",
       "showInFolder": "在文件夹中显示",
       "showInSideBar": "在侧边栏中显示"
+    },
+    "ai": {
+      "title": "AI",
+      "refine": "Refine",
+      "fixGrammar": "Fix Spelling & Grammar",
+      "shorter": "Make Shorter",
+      "longer": "Make Longer",
+      "custom": "Custom Prompt..."
     }
   },
   "search": {
@@ -410,7 +419,8 @@
       "files": "文件与保存",
       "markdown": "Markdown",
       "images": "图片与导出",
-      "keybindings": "快捷键"
+      "keybindings": "快捷键",
+      "ai": "AI"
     },
     "general": {
       "title": "通用",
@@ -757,6 +767,22 @@
       "checking": "检测中…",
       "recheck": "重新检测",
       "failed": "检测失败，请重新检测。"
+    },
+    "ai": {
+      "title": "AI assistant",
+      "enable": "Enable AI actions for selected text",
+      "privacyNote": "Selected text is sent to the configured provider only when you run an AI action.",
+      "model": "Model",
+      "modelNotes": "Any chat model your provider offers, e.g. gpt-4.1-mini or gpt-4o.",
+      "baseUrl": "API base URL",
+      "baseUrlNotes": "Leave empty for OpenAI. Any OpenAI-compatible endpoint also works, e.g. http://localhost:11434/v1 for Ollama.",
+      "apiKey": "API key",
+      "apiKeyNotes": "Stored in the system keychain and never shown again.",
+      "apiKeySet": "An API key is saved.",
+      "apiKeyMissing": "No API key saved.",
+      "save": "Save",
+      "remove": "Remove",
+      "saveFailed": "Could not save the API key: {message}"
     }
   },
   "about": {
@@ -814,7 +840,8 @@
       "findPrevious": "查找上一个",
       "replace": "替换",
       "findInFolder": "在文件夹中查找",
-      "screenshot": "截图"
+      "screenshot": "截图",
+      "aiAssist": "AI Assist"
     },
     "paragraph": {
       "heading1": "标题 1",
@@ -1025,6 +1052,22 @@
     "tabs": {
       "close": "关闭 {name}",
       "preview": "{name}，预览标签页"
+    },
+    "ai": {
+      "promptPlaceholder": "Tell the AI what to do with the selected text...",
+      "run": "Run",
+      "stop": "Stop",
+      "replace": "Replace",
+      "insertBelow": "Insert Below",
+      "copy": "Copy",
+      "retry": "Retry",
+      "discard": "Discard",
+      "generating": "Generating...",
+      "noSelection": "Select some text first.",
+      "disabled": "Turn on AI in Preferences > AI first.",
+      "missingApiKey": "Add an API key in Preferences > AI first.",
+      "failed": "AI request failed: {message}",
+      "selectionChanged": "The selected text has changed. Select it again and retry."
     }
   },
   "readingMode": {

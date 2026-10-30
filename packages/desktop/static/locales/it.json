@@ -58,7 +58,8 @@
       "screenshot": "Cattura schermata",
       "lineEnding": "Carattere di fine riga",
       "lineEndingCrlf": "CRLF (Windows)",
-      "lineEndingLf": "LF (Linux/Mac)"
+      "lineEndingLf": "LF (Linux/Mac)",
+      "aiAssist": "AI Assist..."
     },
     "paragraph": {
       "title": "Paragrafo",
@@ -221,6 +222,14 @@
       "copyPath": "Copia percorso",
       "showInFolder": "Mostra nella cartella",
       "showInSideBar": "Mostra nella barra laterale"
+    },
+    "ai": {
+      "title": "AI",
+      "refine": "Refine",
+      "fixGrammar": "Fix Spelling & Grammar",
+      "shorter": "Make Shorter",
+      "longer": "Make Longer",
+      "custom": "Custom Prompt..."
     }
   },
   "search": {
@@ -410,7 +419,8 @@
       "files": "File e salvataggio",
       "markdown": "Markdown",
       "images": "Immagini ed esportazione",
-      "keybindings": "Scorciatoie da tastiera"
+      "keybindings": "Scorciatoie da tastiera",
+      "ai": "AI"
     },
     "general": {
       "title": "Generali",
@@ -757,6 +767,22 @@
       "checking": "Verifica in corso…",
       "recheck": "Verifica di nuovo",
       "failed": "Rilevamento non riuscito. Riprova."
+    },
+    "ai": {
+      "title": "AI assistant",
+      "enable": "Enable AI actions for selected text",
+      "privacyNote": "Selected text is sent to the configured provider only when you run an AI action.",
+      "model": "Model",
+      "modelNotes": "Any chat model your provider offers, e.g. gpt-4.1-mini or gpt-4o.",
+      "baseUrl": "API base URL",
+      "baseUrlNotes": "Leave empty for OpenAI. Any OpenAI-compatible endpoint also works, e.g. http://localhost:11434/v1 for Ollama.",
+      "apiKey": "API key",
+      "apiKeyNotes": "Stored in the system keychain and never shown again.",
+      "apiKeySet": "An API key is saved.",
+      "apiKeyMissing": "No API key saved.",
+      "save": "Save",
+      "remove": "Remove",
+      "saveFailed": "Could not save the API key: {message}"
     }
   },
   "about": {
@@ -814,7 +840,8 @@
       "findPrevious": "Trova precedente",
       "replace": "Sostituisci",
       "findInFolder": "Trova nella cartella",
-      "screenshot": "Cattura schermata"
+      "screenshot": "Cattura schermata",
+      "aiAssist": "AI Assist"
     },
     "paragraph": {
       "heading1": "Intestazione 1",
@@ -1025,6 +1052,22 @@
     "tabs": {
       "close": "Chiudi {name}",
       "preview": "Scheda di anteprima di {name}"
+    },
+    "ai": {
+      "promptPlaceholder": "Tell the AI what to do with the selected text...",
+      "run": "Run",
+      "stop": "Stop",
+      "replace": "Replace",
+      "insertBelow": "Insert Below",
+      "copy": "Copy",
+      "retry": "Retry",
+      "discard": "Discard",
+      "generating": "Generating...",
+      "noSelection": "Select some text first.",
+      "disabled": "Turn on AI in Preferences > AI first.",
+      "missingApiKey": "Add an API key in Preferences > AI first.",
+      "failed": "AI request failed: {message}",
+      "selectionChanged": "The selected text has changed. Select it again and retry."
     }
   },
   "readingMode": {

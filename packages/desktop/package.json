@@ -55,6 +55,7 @@
     "typecheck:watch": "pnpm --filter @muyajs/core build:types && vue-tsc --noEmit -p tsconfig.json --watch"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^4.0.105",
     "@electron-toolkit/utils": "^4.0.0",
     "@element-plus/icons-vue": "^2.3.2",
     "@intlify/core-base": "^11.4.16",
@@ -62,6 +63,7 @@
     "@marktext/file-icons": "^1.0.6",
     "@muyajs/core": "workspace:*",
     "@vscode/ripgrep": "^1.18.0",
+    "ai": "^7.0.157",
     "arg": "^5.0.2",
     "axios": "^1.21.0",
     "ced": "^2.0.0",
