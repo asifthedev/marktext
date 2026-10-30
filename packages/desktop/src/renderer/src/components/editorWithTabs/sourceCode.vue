@@ -278,10 +278,19 @@ const handleAiAssist = (action: unknown) => {
     apply: async(markdown, placement) => {
       // Edits made while the panel was open may have moved or changed the text.
       if (cm.getRange(from, to) !== text) throw new Error(t('editor.ai.selectionChanged'))
-      if (placement === 'replace') {
-        cm.replaceRange(markdown, from, to)
-      } else {
-        cm.replaceRange(`\n\n${markdown}`, { line: to.line, ch: cm.getLine(to.line).length })
+      const insertAt = placement === 'replace' ? from : { line: to.line, ch: cm.getLine(to.line).length }
+      const inserted = placement === 'replace' ? markdown : `\n\n${markdown}`
+      // A named origin keeps CodeMirror from merging this change with nearby typing.
+      cm.replaceRange(inserted, insertAt, placement === 'replace' ? to : insertAt, 'ai-assist')
+      const start = cm.indexFromPos(insertAt)
+      cm.setSelection(cm.posFromIndex(start), cm.posFromIndex(start + inserted.length))
+      const previewed = cm.getValue()
+      return {
+        revert: () => {
+          if (cm.getValue() !== previewed) throw new Error(t('editor.ai.documentChanged'))
+          cm.undo()
+          cm.setSelection(from, to)
+        }
       }
     },
     focus: () => cm.focus()

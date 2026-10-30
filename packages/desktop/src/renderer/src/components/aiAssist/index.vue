@@ -8,7 +8,7 @@
     tabindex="-1"
     :aria-label="t('contextMenu.ai.title')"
     dir="ltr"
-    @keydown.esc.stop.prevent="close"
+    @keydown.esc.stop.prevent="dismiss"
   >
     <div class="ai-assist-actions">
       <button
@@ -50,11 +50,18 @@
       </el-button>
     </div>
     <div
-      v-if="output || isRunning"
+      v-if="isRunning || status === 'ready'"
       class="ai-assist-output"
       aria-live="polite"
     >
       {{ output || t('editor.ai.generating') }}
+    </div>
+    <div
+      v-if="status === 'preview'"
+      class="ai-assist-status"
+      aria-live="polite"
+    >
+      {{ t('editor.ai.previewing') }}
     </div>
     <div
       v-if="errorText"
@@ -64,22 +71,39 @@
       {{ errorText }}
     </div>
     <div
-      v-if="status === 'done'"
+      v-if="status === 'preview'"
       class="ai-assist-footer"
     >
       <el-button
         type="primary"
         size="small"
-        @click="apply('replace')"
+        @click="accept"
       >
-        {{ t('editor.ai.replace') }}
+        {{ t('editor.ai.accept') }}
       </el-button>
       <el-button
         size="small"
-        @click="apply('after')"
+        @click="reject"
       >
-        {{ t('editor.ai.insertBelow') }}
+        {{ t('editor.ai.reject') }}
       </el-button>
+      <el-button
+        size="small"
+        @click="switchPlacement"
+      >
+        {{ placement === 'replace' ? t('editor.ai.insertBelow') : t('editor.ai.replace') }}
+      </el-button>
+      <el-button
+        size="small"
+        @click="retry"
+      >
+        {{ t('editor.ai.retry') }}
+      </el-button>
+    </div>
+    <div
+      v-if="status === 'ready'"
+      class="ai-assist-footer"
+    >
       <el-button
         size="small"
         @click="copy"
@@ -111,7 +135,13 @@ import bus from '@/bus'
 import notice from '@/services/notification'
 import { usePreferencesStore } from '@/store/preferences'
 import type { AiAction } from '@shared/types/ai'
-import { AI_ASSIST_OPEN, type AiAssistOpenPayload, type AiAssistTarget, type AiPlacement } from './target'
+import {
+  AI_ASSIST_OPEN,
+  type AiAssistOpenPayload,
+  type AiAssistTarget,
+  type AiPlacement,
+  type AiPreview
+} from './target'
 
 const PANEL_WIDTH = 460
 const VIEWPORT_MARGIN = 16
@@ -132,12 +162,17 @@ const target = ref<AiAssistTarget | null>(null)
 const instruction = ref('')
 const output = ref('')
 const errorText = ref('')
-const status = ref<'idle' | 'running' | 'done'>('idle')
+// `preview`: the answer is in the document awaiting accept/reject.
+// `ready`: an answer exists but could not be placed in the document.
+const status = ref<'idle' | 'running' | 'preview' | 'ready'>('idle')
+const placement = ref<AiPlacement>('replace')
 const lastAction = ref<AiAction | null>(null)
 const panelRef = ref<HTMLElement | null>(null)
 const promptRef = ref<HTMLTextAreaElement | null>(null)
 // Id of the request whose deltas and result are still wanted; null when none is.
 let activeRequestId: string | null = null
+// Handle for the answer currently shown in the document; null when none is.
+let preview: AiPreview | null = null
 let removeDeltaListener: (() => void) | null = null
 
 const isRunning = computed(() => status.value === 'running')
@@ -155,14 +190,42 @@ const panelStyle = computed(() => {
   return { top: `${rect.bottom + 8}px`, left, width: `${PANEL_WIDTH}px` }
 })
 
+const describeError = (error: unknown): string => error instanceof Error ? error.message : String(error)
+
 const cancelActiveRequest = (): void => {
   if (activeRequestId) window.electron.ipcRenderer.send('mt::ai::cancel', activeRequestId)
   activeRequestId = null
 }
 
+/** Take the previewed answer back out of the document. Throws if the user edited it since. */
+const revertPreview = (): void => {
+  const current = preview
+  preview = null
+  current?.revert()
+}
+
+const showPreview = async(where: AiPlacement): Promise<void> => {
+  const current = target.value
+  if (!current) return
+  try {
+    preview = await current.apply(output.value, where)
+    placement.value = where
+    status.value = 'preview'
+  } catch (error) {
+    status.value = 'ready'
+    errorText.value = t('editor.ai.failed', { message: describeError(error) })
+  }
+}
+
 const run = async(action: AiAction): Promise<void> => {
   const current = target.value
   if (!current) return
+  try {
+    revertPreview()
+  } catch (error) {
+    errorText.value = describeError(error)
+    return
+  }
   cancelActiveRequest()
   const requestId = crypto.randomUUID()
   activeRequestId = requestId
@@ -181,7 +244,7 @@ const run = async(action: AiAction): Promise<void> => {
 
   if (result.ok) {
     output.value = result.text
-    status.value = 'done'
+    await showPreview(placement.value)
     return
   }
   status.value = 'idle'
@@ -202,31 +265,52 @@ const retry = (): void => {
 
 const stop = (): void => {
   cancelActiveRequest()
-  status.value = output.value ? 'done' : 'idle'
+  status.value = output.value ? 'ready' : 'idle'
 }
 
 const close = (): void => {
   cancelActiveRequest()
+  preview = null
   target.value?.focus()
   target.value = null
   instruction.value = ''
   output.value = ''
   errorText.value = ''
   status.value = 'idle'
+  placement.value = 'replace'
   lastAction.value = null
 }
 
-const apply = async(placement: AiPlacement): Promise<void> => {
-  const current = target.value
-  if (!current) return
+const accept = (): void => {
+  close()
+}
+
+const reject = (): void => {
   try {
-    await current.apply(output.value, placement)
-    close()
+    revertPreview()
   } catch (error) {
-    errorText.value = t('editor.ai.failed', {
-      message: error instanceof Error ? error.message : String(error)
-    })
+    // The answer stays in the document; keep the panel so the user sees why.
+    errorText.value = describeError(error)
+    status.value = 'ready'
+    return
   }
+  close()
+}
+
+const switchPlacement = async(): Promise<void> => {
+  try {
+    revertPreview()
+  } catch (error) {
+    errorText.value = describeError(error)
+    status.value = 'ready'
+    return
+  }
+  await showPreview(placement.value === 'replace' ? 'after' : 'replace')
+}
+
+const dismiss = (): void => {
+  if (status.value === 'preview') reject()
+  else close()
 }
 
 const copy = async(): Promise<void> => {
@@ -240,13 +324,9 @@ const open = async(payload: unknown): Promise<void> => {
     void notice.notify({ title: t('contextMenu.ai.title'), message: t('editor.ai.disabled'), type: 'warning' })
     return
   }
-  cancelActiveRequest()
+  // A preview left from an earlier selection counts as accepted.
+  close()
   target.value = nextTarget
-  instruction.value = ''
-  output.value = ''
-  errorText.value = ''
-  status.value = 'idle'
-  lastAction.value = null
   await nextTick()
   if (action === 'custom') {
     promptRef.value?.focus()
@@ -256,8 +336,8 @@ const open = async(payload: unknown): Promise<void> => {
   }
 }
 
-// A click elsewhere dismisses the panel only while no answer is pending, so a
-// stray click cannot throw away a finished result.
+// A click elsewhere dismisses the panel only while nothing is pending or
+// previewed, so a stray click cannot throw away an answer.
 const handlePointerDown = (event: PointerEvent): void => {
   if (!target.value || status.value !== 'idle') return
   if (panelRef.value && !panelRef.value.contains(event.target as Node)) close()
@@ -357,6 +437,11 @@ onBeforeUnmount(() => {
   overflow-wrap: anywhere;
   background: var(--inputBgColor);
   border-radius: 6px;
+}
+
+.ai-assist-status {
+  font-size: 12px;
+  opacity: 0.75;
 }
 
 .ai-assist-error {

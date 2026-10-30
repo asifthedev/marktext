@@ -1026,6 +1026,14 @@ const handleAiAssist = (action: unknown) => {
         throw new Error(t('editor.ai.selectionChanged'))
       }
       await muya.insertMarkdown(markdown, placement)
+      const previewed = muya.getMarkdown()
+      return {
+        revert: () => {
+          // insertMarkdown is a single undo step, but only while nothing was edited after it.
+          if (muya.getMarkdown() !== previewed) throw new Error(t('editor.ai.documentChanged'))
+          muya.undo()
+        }
+      }
     },
     focus: () => muya.focus()
   }

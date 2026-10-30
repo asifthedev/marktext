@@ -70,6 +70,29 @@ describe('muya.insertMarkdown', () => {
         expect(muya.getMarkdown()).toBe('Hello world\n\n# Title\n\n- a\n- b\n');
     });
 
+    it('reverts a replacement with one undo without undoing the edit just before it', async () => {
+        const muya = bootMuya('One\n');
+        firstContent(muya).setCursor(3, 3, true);
+        muya.insertParagraph('after', 'Two');
+        muya.editor.scrollPage!.lastContentInDescendant()!.setCursor(0, 3, true);
+
+        await muya.insertMarkdown('# A\n\n- b');
+        expect(muya.getMarkdown()).toBe('One\n\n# A\n\n- b\n');
+        muya.undo();
+
+        expect(muya.getMarkdown()).toBe('One\n\nTwo\n');
+    });
+
+    it('reverts an insertion below with a single undo', async () => {
+        const muya = bootMuya('Hello world\n');
+        firstContent(muya).setCursor(0, 5, true);
+
+        await muya.insertMarkdown('# Title', 'after');
+        muya.undo();
+
+        expect(muya.getMarkdown()).toBe('Hello world\n');
+    });
+
     it('does nothing in read-only mode', async () => {
         const muya = bootMuya('Hello world\n');
         firstContent(muya).setCursor(0, 5, true);

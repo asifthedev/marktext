@@ -1,4 +1,4 @@
-import type { JSONOpList } from 'ot-json1';
+import type { JSONOp, JSONOpList } from 'ot-json1';
 import type { Muya } from '../muya';
 import type { TSelectionState } from '../selection/types';
 import type { IJSONChangePayload } from '../state/changePayload';
@@ -249,6 +249,29 @@ class History {
 
         if (this._stack.undo.length > this._options.maxStack)
             this._stack.undo.shift();
+    }
+
+    get undoDepth() {
+        return this._stack.undo.length;
+    }
+
+    /**
+     * Merge every undo step recorded above `depth` (a previous `undoDepth`)
+     * into one step that restores the selection of the oldest of them.
+     */
+    squashSince(depth: number) {
+        const merged = this._stack.undo.splice(depth);
+        if (merged.length < 2) {
+            this._stack.undo.push(...merged);
+            return;
+        }
+        // Undo runs the newest inverse first.
+        const [newest, ...older] = merged.map(({ operation }) => operation).reverse();
+        let operation: JSONOp = newest;
+        for (const op of older)
+            operation = json1.type.compose(operation, op);
+        if (operation && operation.length > 0)
+            this._stack.undo.push({ operation: operation as JSONOpList, selection: merged[0].selection });
     }
 
     canRedo() {

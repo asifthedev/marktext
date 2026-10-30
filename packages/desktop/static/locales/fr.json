@@ -1067,7 +1067,11 @@
       "disabled": "Turn on AI in Preferences > AI first.",
       "missingApiKey": "Add an API key in Preferences > AI first.",
       "failed": "AI request failed: {message}",
-      "selectionChanged": "The selected text has changed. Select it again and retry."
+      "selectionChanged": "The selected text has changed. Select it again and retry.",
+      "accept": "Accept",
+      "reject": "Reject",
+      "previewing": "Preview shown in the document. Accept to keep it or Reject to restore the original.",
+      "documentChanged": "The document was edited after the preview, so it cannot be rejected automatically. Use Undo instead."
     }
   },
   "readingMode": {

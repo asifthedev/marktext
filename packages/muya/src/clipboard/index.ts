@@ -228,6 +228,11 @@ class Clipboard {
         const selection = this.selection.getTextSelection();
         if (!selection || this.muya.isReadOnly)
             return;
+        // Fence the insertion into its own undo group whose undo restores the
+        // original selection, so a single undo reverts exactly this call.
+        const { history } = this.muya.editor;
+        history.cutoff(this.selection.getSelectionState() ?? undefined);
+        const depth = history.undoDepth;
         if (placement === 'after') {
             const end = selection.direction === SelectionDirection.BACKWARD ? selection.anchor : selection.focus;
             const caret = { path: end.path, offset: end.offset };
@@ -235,6 +240,8 @@ class Clipboard {
             this.muya.insertParagraph('after');
         }
         await pastePlainText(this, markdown);
+        history.squashSince(depth);
+        history.cutoff();
     }
 
     private async _readClipboardText(): Promise<string> {
