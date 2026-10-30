@@ -7,6 +7,7 @@ import {
 } from '../config'
 import {
   dark,
+  github,
   graphite,
   materialDark,
   oneDark,
@@ -79,6 +80,9 @@ export const addThemeStyle = (theme: string): void => {
       break
     case 'ulysses':
       themeStyleEle.innerHTML = patchTheme(ulysses())
+      break
+    case 'github':
+      themeStyleEle.innerHTML = patchTheme(github())
       break
     case 'graphite':
       themeStyleEle.innerHTML = patchTheme(graphite())

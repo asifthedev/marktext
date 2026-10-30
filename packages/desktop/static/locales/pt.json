@@ -185,7 +185,8 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night Claro",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses Claro"
+      "ulyssesLight": "Ulysses Claro",
+      "githubLight": "GitHub Light"
     }
   },
   "contextMenu": {

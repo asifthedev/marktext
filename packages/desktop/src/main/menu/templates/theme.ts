@@ -12,6 +12,7 @@ const LIGHT_THEMES: ReadonlyArray<readonly [string, string]> = [
   ['cadmiumLight', 'light'],
   ['catppuccinLatte', 'catppuccin-latte'],
   ['everforestLight', 'everforest-light'],
+  ['githubLight', 'github'],
   ['graphiteLight', 'graphite'],
   ['gruvboxLight', 'gruvbox-light'],
   ['rosePineDawn', 'rose-pine-dawn'],

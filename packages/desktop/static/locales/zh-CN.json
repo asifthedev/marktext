@@ -185,7 +185,8 @@
       "tokyoNight": "Tokyo Night",
       "tokyoNightLight": "Tokyo Night 浅色",
       "tokyoNightStorm": "Tokyo Night Storm",
-      "ulyssesLight": "Ulysses 浅色"
+      "ulyssesLight": "Ulysses 浅色",
+      "githubLight": "GitHub Light"
     }
   },
   "contextMenu": {
